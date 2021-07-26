@@ -1,0 +1,69 @@
+<!-- 用JavaScript输出文本 + 用JavaScript改变HTML元素
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<h1>我的第一个 Web 页面</h1>
+<p id="demo">我的第一个段落。</p>
+
+<script>
+document.getElementById("demo").innerHTML="段落已修改。";
+
+</script>
+</body>
+</html> -->
+
+<!-- 利用函式修改內容 -->
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+	
+<h1>我的 Web 页面</h1>
+<p id="demo">一个段落。</p>
+<button onclick="myFunction()">点我</button>
+
+<script>
+
+function myFunction() 
+{document.getElementById("demo").innerHTML = "我的第一个 JavaScript 函数。";}
+
+document.write(Date());
+
+</script>	
+</body>
+</html>
+
+<!-- JavaScript 语句 -->
+<!-- 
+<p id="demo">一个段落。</p>
+<div id="myDIV">一个 DIV。</div>
+<script>
+document.getElementById("demo").innerHTML="你好 Dolly";
+document.getElementById("myDIV").innerHTML="你最近怎么样?";
+</script>
+-->
+
+<!-- JavaScript 代码块 -->
+<!-- 
+<h1>我的 Web 页面</h1>
+<p id="myPar">我是一个段落。</p>
+<div id="myDiv">我是一个div。</div>
+<p>
+<button type="button" onclick="myFunction()">点击这里</button>
+</p>
+<script>
+function myFunction(){
+	document.getElementById("myPar").innerHTML="你好世界！";
+	document.getElementById("myDiv").innerHTML="你最近怎么样?";
+}
+</script>
+<p>当您点击上面的按钮时，两个元素会改变。</p> 
+-->

@@ -1,0 +1,10 @@
+Content-Type 表頭是用來表示本次 HTTP 事務回傳的內容類型。
+
+设置了 http-equiv 属性，meta 元素则是编译指令，提供的信息与类似命名的HTTP头部相同。
+x-ua-compatible 如果指定，则 content 属性必须具有值 "IE=edge"。用户代理必须忽略此指示。
+
+Content-Language content="zh-tw"是一个 entity header （实体消息首部），
+用来说明访问者希望采用的语言或语言组合，这样的话用户就可以根据自己偏好的语言来定制不同的内容。
+
+The <meta> 元素可用于提供 名称-值 对形式的文档元数据，
+name 属性为元数据条目提供名称，而 content 属性提供值： <meta name="color-scheme" content="dark light">

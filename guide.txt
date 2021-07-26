@@ -1,0 +1,196 @@
+JavaScript 用法
+    HTML 中的脚本必须位于 <script> 与 </script> 标签之间。
+    脚本可被放置在 HTML 页面的 <body> 和 <head> 部分中。
+    如需在 HTML 页面中插入 JavaScript，请使用 <script> 标签。
+    <script> 和 </script> 会告诉 JavaScript 在何处开始和结束。
+
+外部的 JavaScript
+    也可以把脚本保存到外部文件中。外部文件通常包含被多个网页使用的代码。
+    外部 JavaScript 文件的文件扩展名是 .js。
+    如需使用外部文件，请在 <script> 标签的 "src" 属性中设置该 .js 文件。
+
+JavaScript 显示数据
+JavaScript 可以通过不同的方式来输出数据：
+    使用 window.alert() 弹出警告框。
+    使用 document.write() 方法将内容写到 HTML 文档中。
+    使用 innerHTML 写入到 HTML 元素。
+    使用 console.log() 写入到浏览器的控制台。
+
+JavaScript 语句标识符
+JavaScript 语句通常以一个 语句标识符 为开始，并执行该语句。
+语句标识符是保留关键字不能作为变量名使用。
+下表列出了 JavaScript 语句标识符 (关键字) ：
+    语句	        描述
+    break	        用于跳出循环。
+    catch	        语句块，在 try 语句块执行出错时执行 catch 语句块。
+    continue	    跳过循环中的一个迭代。
+    do ... while	执行一个语句块，在条件语句为 true 时继续执行该语句块。
+    for	            在条件语句为 true 时，可以将代码块执行指定的次数。
+    for ... in	    用于遍历数组或者对象的属性（对数组或者对象的属性进行循环操作）。
+    function	    定义一个函数
+    if ... else	    用于基于不同的条件来执行不同的动作。
+    return	        退出函数
+    switch	        用于基于不同的条件来执行不同的动作。
+    throw	        抛出（生成）错误 。
+    try	            实现错误处理，与 catch 一同使用。
+    var	            声明一个变量。
+    while	        当条件语句为 true 时，执行语句块。
+
+使用 let 和 const (ES6)
+在 2015 年以前，我们使用 var 关键字来声明 JavaScript 变量。
+在 2015 后的 JavaScript 版本 (ES6) 允许我们使用 const 关键字来定义一个常量，
+使用 let 关键字定义的限定范围内作用域的变量。e.
+
+switch (expression) {
+  case value1:
+    // 当 expression 的结果与 value1 匹配时，执行此处语句
+    break;
+  case value2:
+    // 当 expression 的结果与 value2 匹配时，执行此处语句
+    break;
+
+JavaScript 支持不同类型的循环：
+    for - 循环代码块一定的次数
+    for/in - 循环遍历对象的属性
+    while - 当指定的条件为 true 时循环指定的代码块
+    do/while - 同样当指定的条件为 true 时循环指定的代码块
+
+For 循环
+    for 循环是您在希望创建循环时常会用到的工具。
+    下面是 for 循环的语法：
+    for (var i=0; i<5; i++)
+    {
+        x=x + "该数字为 " + i + "<br>";
+    }
+        语句 1 （代码块）开始前执行
+        语句 2 定义运行循环（代码块）的条件
+        语句 3 在循环（代码块）已被执行之后执行
+
+JavaScript 事件
+HTML 事件是发生在 HTML 元素上的事情。
+当在 HTML 页面中使用 JavaScript 时， JavaScript 可以触发这些事件。
+下面是一些常见的HTML事件的列表:
+    事件	    描述
+    onchange	HTML 元素改变
+    onclick	    用户点击 HTML 元素
+    onmouseover	用户在一个HTML元素上移动鼠标
+    onmouseout	用户从一个HTML元素上移开鼠标
+    onkeydown	用户按下键盘按键
+    onload	    浏览器已完成页面的加载
+
+HTML DOM 使 JavaScript 有能力对 HTML 事件做出反应。
+HTML 事件的例子：
+    当用户点击鼠标时
+    当网页已加载时
+    当图像已加载时
+    当鼠标移动到元素上时
+    当输入字段被改变时
+    当提交 HTML 表单时
+    当用户触发按键时
+
+JavaScript 错误 - throw、try 和 catch
+    try 语句测试代码块的错误。
+    catch 语句处理错误。
+    throw 语句创建自定义错误。
+    finally 语句在 try 和 catch 语句之后，无论是否有触发异常，该语句都会执行。
+    
+    try {
+        ...    //异常的抛出
+    } catch(e) {
+        ...    //异常的捕获与处理
+    } finally {
+        ...    //结束处理
+    }
+
+JavaScript 错误
+当 JavaScript 引擎执行 JavaScript 代码时，会发生各种错误。
+可能是语法错误，通常是程序员造成的编码错误或错别字。
+可能是拼写错误或语言中缺少的功能（可能由于浏览器差异）。
+可能是由于来自服务器或用户的错误输出而导致的错误。
+当然，也可能是由于许多其他不可预知的因素。
+
+字符串方法
+更多方法实例可以参见：JavaScript String 对象。
+    方法	        描述
+    charAt()	    返回指定索引位置的字符
+    charCodeAt()	返回指定索引位置字符的 Unicode 值
+    concat()	    连接两个或多个字符串，返回连接后的字符串
+    fromCharCode()	将 Unicode 转换为字符串
+    indexOf()	    返回字符串中检索指定字符第一次出现的位置
+    lastIndexOf()	返回字符串中检索指定字符最后一次出现的位置
+    localeCompare()	用本地特定的顺序来比较两个字符串
+    match()	        找到一个或多个正则表达式的匹配
+    replace()	    替换与正则表达式匹配的子串
+    search()	    检索与正则表达式相匹配的值
+    slice()	        提取字符串的片断，并在新的字符串中返回被提取的部分
+    split()	        把字符串分割为子字符串数组
+    substr()	    从起始索引号提取字符串中指定数目的字符
+    substring()	    提取字符串中两个指定的索引号之间的字符
+    toLocaleLowerCase()	根据主机的语言环境把字符串转换为小写，只有几种语言（如土耳其语）具有地方特有的大小写映射
+    toLocaleUpperCase()	根据主机的语言环境把字符串转换为大写，只有几种语言（如土耳其语）具有地方特有的大小写映射
+    toLowerCase()	把字符串转换为小写
+    toString()	    返回字符串对象值
+    toUpperCase()	把字符串转换为大写
+    trim()	        移除字符串首尾空白
+    valueOf()	    返回某个字符串对象的原始值
+
+逻辑运算符
+逻辑运算符用于测定变量或值之间的逻辑。
+给定 x=6 以及 y=3，下表解释了逻辑运算符：
+    运算符	    描述	例子
+    &&	        and	    (x < 10 && y > 1) 为 true
+    ||	        or	    (x==5 || y==5) 为 false
+    !	        not	    !(x==y) 为 true
+
+typeof 操作符
+你可以使用 typeof 操作符来检测变量的数据类型。
+    实例
+    typeof "John"                // 返回 string
+    typeof 3.14                  // 返回 number
+    typeof false                 // 返回 boolean
+    typeof [1,2,3,4]             // 返回 object
+    typeof {name:'John', age:34} // 返回 object
+
+JavaScript 数据类型 在 JavaScript 中有
+6 种不同的数据类型：
+    1.string
+    2.number
+    3.boolean
+    4.object
+    5.function
+    6.symbol
+
+3 种对象类型：
+    1.Object
+    2.Date
+    3.Array
+    
+2 个不包含任何值的数据类型：
+    1.null
+    2.undefined
+
+JavaScript 正则表达式
+    正则表达式（英语：Regular Expression，在代码中常简写为regex、regexp或RE）
+    使用单个字符串来描述、匹配一系列符合某个句法规则的字符串搜索模式。
+    语法：
+    /正则表达式主体/修饰符(可选)
+
+正则表达式模式
+方括号用于查找某个范围内的字符：
+    表达式	描述
+    [abc]	查找方括号之间的任何字符。
+    [0-9]	查找任何从 0 至 9 的数字。
+    (x|y)	查找任何以 | 分隔的选项。
+
+元字符是拥有特殊含义的字符：
+    元字符	描述
+    \d	    查找数字。
+    \s	    查找空白字符。
+    \b	    匹配单词边界。
+    \uxxxx	查找以十六进制数 xxxx 规定的 Unicode 字符。
+
+量词:
+    量词	描述
+    n+	    匹配任何包含至少一个 n 的字符串。
+    n*	    匹配任何包含零个或多个 n 的字符串。
+    n?	    匹配任何包含零个或一个 n 的字符串。
