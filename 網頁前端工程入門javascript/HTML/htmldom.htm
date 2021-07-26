@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML DOM</title>
+<script type="text/javascript">
+function change() {
+    var spanObj=document.getElementById("emotion"); // 取得標籤物件
+    spanObj.innerHTML="bad"; // 修改標籤物件的內容
+    spanObj.style.color="red"; // 修改css的內容
+    spanObj.style.fontWeight="bold"; // css的-在js裡要首字大寫 font-weight -> fontWeight
+    // spanObj.style.display="none";  //隱藏
+}
+
+</script>
+</head>
+<body>
+    <div>
+        Today is a <span id="emotion">good</span> day. Let's go to movie.
+    </div>
+    <button onclick="change();">Change</button>
+</body>
+</html>
+
+
+<!-- alert(window.screen.width+"x"+window.screen.height); //螢幕解析度 -->

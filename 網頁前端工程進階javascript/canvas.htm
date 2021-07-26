@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Canvas 影像處理</title>
+<script type="text/javascript">
+var cvs, ctx;
+window.onload=function(){
+    cvs=document.getElementById("cvs");
+    ctx=cvs.getContext("2d");
+    // 載入影像
+    // var img=new Image();
+    // img.src="landscape.jpg";
+    // img.onload=function(){ //註冊 load 事件，圖片載入完成後，才做繪製
+    //     ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
+    // }
+};
+function invertColor(){
+    var pixels=ctx.getImageData(0, 0, cvs.width, cvs.height); // ImageData 物件
+    var data=pixels.data; // 一個像素佔據 4 個 (bytes)。 r, g, b, a(透明度) (0~255)
+    for(var i=0;i<data.length;i+=4){
+        data[i]=255-data[i] // 紅色
+        data[i+1]=255-data[i+1] // 綠色
+        data[i+2]=255-data[i+2] // 藍色
+    }
+    ctx.putImageData(pixels, 0, 0);
+}
+function loadFile(input){    // 讓使用者載入檔案
+    var file=input.files[0];
+    var src=URL.createObjectURL(file);
+    var img=new Image();
+    img.src=src;
+    img.onload=function(){
+        ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
+    };
+}
+function saveFile(){  // 儲存圖片
+    var link=document.getElementById("download");
+    link.download="image.jpg";
+    link.href=cvs.toDataURL("image/jpeg");
+    link.click();
+}
+</script>
+</head>
+<body>
+<div>
+    <input type="file" onchange="loadFile(this);"/>
+    <button onclick="saveFile();">儲存檔案</button>
+    <a id="download"></a>
+    <button onclick="invertColor();">顏色的反轉</button>
+</div>
+<canvas id="cvs" width="800" height="600" style="border:1px solid #000000"></canvas>
+</body>
+</html>
+
+<!-- // 老師如果我想把照片弄成黑白要怎麼寫for 呢
+
+// 取 r g b 的數值平均，並且設定回去。
+// var avg=(data[i]+data[i+1]+data[i+2])/3;
+// data[i]=data[i+1]=data[i+2]=avg;
+// 大概是這樣的概念 -->
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Canvas 基本教學</title>
+<script type="text/javascript">
+window.onload=function(){
+    var cvs=document.getElementById("cvs");
+    var ctx=cvs.getContext("2d"); // Canvas Context Object
+    // Fill 填滿
+    ctx.fillStyle="red";
+    ctx.globalAlpha=0.5;
+    ctx.fillRect(50, 50, 100, 100);
+    // Stroke 描邊
+    ctx.globalAlpha=1;
+    ctx.strokeStyle="blue";
+    ctx.strokeRect(200, 200, 50, 50);
+    // Path 路徑
+    ctx.beginPath();
+    ctx.moveTo(200, 100); //移動當前所在的位置
+    ctx.lineTo(300, 300);
+    ctx.closePath();
+    ctx.stroke(); //ctx.fill();
+    // 利用路徑畫出多邊形
+    ctx.beginPath();
+    ctx.moveTo(300, 300);
+    ctx.lineTo(400, 350);
+    ctx.lineTo(250, 400);
+    ctx.closePath();
+    ctx.fill();
+};
+
+</script>
+</head>
+<body>
+<canvas id="cvs" width="800" height="600" style="border:1px solid #000000"></canvas>
+</body>
+</html> -->

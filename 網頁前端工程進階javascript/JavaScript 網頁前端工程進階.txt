@@ -1,0 +1,32 @@
+JavaScript ES6 網頁前端工程進階
+ 課程說明
+重點複習並強化 JavaScript 語言基礎，深入 JavaScript 語言特性和開發技巧。學習使用 Google、Facebook 等公司提供的 JavaScript 套件，讓網站具備更強大的功能：地圖整合、圖表製作、資料視覺化、整合社群功能等等。
+ 適合對象
+您需要具備 HTML / CSS / JS 程式基礎。
+ 線上教學
+YouTube 免費線上教學
+ 學生時間
+說說你的想法
+ 
+ 課程內容
+基礎 Javascript 重點提要
+Google 地圖套件 / 資料
+Google 視覺化圖表 / 範例 / 資料
+Google 登入服務
+Facebook 開發者簡介
+Facebook 應用程式
+Facebook 登入驗證 / 範例
+Facebook Graph API、對話框
+事件傳遞和委託
+類別與物件
+原型鍊、類別的繼承
+非同步處理 Promise
+非同步處理 Async Await
+操作綁定物件
+箭頭函式 Arrow Function
+多執行緒程式
+
+1. Canvas 繪圖
+2. 影音播放與控制
+3. 動畫/特效製作教學
+4. SVG 向量繪圖

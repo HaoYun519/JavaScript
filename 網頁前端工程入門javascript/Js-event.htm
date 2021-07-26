@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>event 事件物件 event Object</title>
+<script type="text/javascript">
+function init(){
+    var btn=document.getElementById("btn"); // 取得物件
+    var handler=function(e){  // 準備一個事件處理器(事件的函式)
+        alert(e.clientX+","+e.clientY);  // 抓取滑鼠點擊的座標
+    };
+    btn.addEventListener("click",handler); // 註冊事件處理器
+    /*
+        1. 使用者點擊了按鈕，觸發 click 事件。
+        2. 瀏覽器主動收集和事件有關的資訊，並製造出 Event Object 事件物件。
+           var eventObj=事件物件;
+        3. 呼叫已經註冊的事件處理器 (事件處理函式)
+           handler(eventObj);
+    */
+    document.addEventListener("keydown", function(e){ //匿名函式：用來直接當作事件處理器
+        alert(e.keyCode); // 取得使用者按鍵
+    });
+}
+
+</script>
+</head>
+<body onload="init();">
+    <button id="btn">Click</button>
+</body>
+</html>
+
+
+<!--(範例1) <script type="text/javascript">
+function over(element) {
+    element.style.color="red"
+    }
+function out(element) {
+    element.style.color="black"
+    }
+</script>
+</head>
+<body>
+    <button onclick="alert('Clicked');">Click</button> 靜態的事件處理
+    <span onmouseover="over(this);"   
+    onmouseout="out(this);">Test</span>
+    <div onmouseover="over(this);"
+    onmouseout="out(this);">Line 2</div>
+</body> -->
+
+<!-- (範例2)// 用 Javascript 的程式，動態的註冊事件處理器
+function init(){
+    var btn=document.getElementById("btn");
+    // btn.onclick=function(){
+    //     alert("Clicked");
+    // }
+    var handler=function(){ // 準備一個事件處理器(對應事件的函式)
+        alert("Clicked");
+    };
+    btn.addEventListener("click" /* 事件的名稱 */, handler);
+}
+</script>
+</head>
+<body onload="init()";>
+    <button id="btn">Click</button>
+</body> -->

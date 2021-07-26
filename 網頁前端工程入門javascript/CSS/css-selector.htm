@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>CSS 選擇器 - 詳細介紹</title>
+<style type="text/css">
+/* 標籤名稱選擇器 */
+body{
+    font-size: 16px;font-family: "微軟正黑體";
+}
+h3{
+    font-size: 20px;text-decoration:underline;
+}
+/* . class 選擇器 */
+div.content{
+    padding: 10px;border: 1px dashed #888888;
+}
+/* # id 選擇器 */
+#btn{
+    border: 1px solid #1b63eb69;
+    background-color:#ffffff;padding:5px;
+}
+/* 虛擬選擇器:搭配其他選擇器使用 */
+/* :hover 虛擬選擇器:滑鼠移到目標上時，套用一組設定*/
+#btn:hover{
+    background-color: #a3a19d;
+}
+/* :focus 虛擬選擇器:當目標取得焦點時，套用一組設定*/
+input:focus{
+    border: 2px solid #ff0000;
+    outline: none;
+}
+/* 階層式選擇器:搭配其他選擇器使用 */
+.favorite a{
+    color: #00f;
+}
+.demo a{
+    color: #080;
+}
+</style>
+</head>
+<body>
+    <h3>我的自我介紹</h3>
+    <div class="content">
+        大家好，我是皓羽。
+    </div>
+    <h3>我的最愛連結</h3>
+    <ul class="favorite">
+        <li><a href="https://www.google.com/">Google</a></li>
+        <li><a href="https://www.facebook.com/">Facebook</a></li>
+    </ul>
+    <h3>老師作品</h3>
+    <ul class="demo">
+        <li><a href="https://training.pada-x.com">彭彭的課程網站</a></li>
+        <li><a href="https://piconion.com/">Piconion</a></li>
+    </ul>
+    <h3>和我聯絡</h3>
+    <div class="content">
+        填寫訊息 <input type="text" /> <button id="btn">送出</button>
+    </div>
+<body>
+</html>

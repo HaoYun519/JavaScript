@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>HTML DOM 選單開合操作</title>
+<script type="text/javascript">
+function toggleMenu(number){
+    var menu=document.getElementById("menu-"+number);
+    menu.classList.toggle("hide"); //切換標籤物件的 class 的 hide 設定
+    /*
+    if(menu.style.display=="none"){ //目前是藏起來的狀態
+        menu.style.display="block";
+    }else{ //目前是秀出來的狀態
+        menu.style.display="none";
+    } 
+    */
+}
+</script>
+<style type="text/css">
+.hide{display: none;}
+</style>
+</head>
+<body>
+    <div onclick="toggleMenu(1)">選單的標題 1</div>
+    <ul id="menu-1">
+        <li>項目1-1</li>
+        <li>項目1-2</li>
+        <li>項目1-3</li>
+    </ul>
+    <div onclick="toggleMenu(2)">選單的標題 2</div>
+    <ul id="menu-2">
+        <li>項目2-1</li>
+        <li>項目2-2</li>
+        <li>項目2-3</li>
+    </ul>
+    <div onclick="toggleMenu(3)">選單的標題 3</div>
+    <ul id="menu-3">
+        <li>項目3-1</li>
+        <li>項目3-2</li>
+        <li>項目3-3</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<htm>
+<head>
+<meta charset="utf-8"></meta>
+<title>自動排程 Schedule</title>
+<script type="text/Javascript">
+var timer;
+function init(){
+    timer=document.getElementById("timer");
+    window.setTimeout(countdown, 1000); // countdown 為函式 預設為千分之秒
+    // window.setInterval(countdown, 1000); // 每秒鐘執行 countdown/次
+}
+function countdown(){ //建立函式
+    timer.innerHTML=timer.innerHTML-1;
+    if(timer.innerHTML>0){ // 還沒倒數到 0，繼續倒數
+        window.setTimeout(countdown, 1000);  
+    }else{ // 若是已經倒數到0，做該做的工作
+        document.location="http://www.google.com";
+    }
+}
+</script>
+</head>
+<body onload="init();">
+    <h3 style="color: rgb(247, 99, 0) ;"><span id="timer">5</span></h3>
+</body>
+</htm>

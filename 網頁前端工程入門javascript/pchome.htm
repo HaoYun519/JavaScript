@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>PChome商店街：台灣 NO.1 網路開店平台</title>
+<meta name="description" content="PChome商店街商店數超過120,000家店，是台灣店家數最多的電子商務購物平台。商店街開店目前推出跨店宅配$0免運、24h快速到貨、四大超商取貨優惠等服務，是您購物的最佳選擇！">    
+<meta property="og:title" content="PChome商店街：台灣 NO.1 網路開店平台"> 
+<meta property="og:url" content="https://www.pcstore.com.tw">
+<meta property="og:image" content="https://img.pcstore.com.tw/web_img/st/idx/toplogo.png">
+<meta property="og:description" content="PChome商店街商店數超過120,000家店，是台灣店家數最多的電子商務購物平台。商店街開店目前推出跨店宅配$0免運、24h快速到貨、四大超商取貨優惠等服務，是您購物的最佳選擇！"> 
+<meta property="og:site_name" content="PChome商店街"> 
+<script type="text/javascript" src="/js/real_fcache/lm3_idxspd.js?t=1626267539"></script>
+<script type="text/javascript" src="/js/real_fcache/lm3_jsdata.js?t=1626267539"></script>
+<link rel="stylesheet" type="text/css" href="/css/jquery/plugin/slick/slick.min.css">
+<link rel="stylesheet" type="text/css" href="/css/jquery/plugin/slick/slick-theme.min.css">
+<link rel="stylesheet" type="text/css" href="/css/siimsg.css?t=11" >
+<link rel="stylesheet" type="text/css" href="/css/style_lm3.css?t=2021070901">
+<script type="text/javascript" src="/js/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery/plugin/slick/slick.min.js"></script>
+<script type="text/javascript" src="/js/store_lm3.js?t=59"></script>
+<script language="JavaScript" src="/css/extjs/ext.js?t=11"></script><script type="text/javascript" src="/js/lm3_idxfun.js?t=2021071201"></script>
+<link href="/css/fonticon.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="https://m.pcstore.com.tw">
+<script type="text/javascript" src="/js/search.js?t=33"></script>
+<style type="text/css">
+.ad_970x90_area {
+    margin: 35px auto 0px;
+    text-align: center;
+    padding: 10px;
+    height: 110px;
+}
+.topUd {
+    position: relative;
+    width: 1250px;
+    padding: 0px 10px;
+    margin: 0px auto 10px auto;
+    background: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.topUd > div.topUdOut {
+    font-size: 0;
+    width: 100%;
+    margin-left: -1230px;
+}
+</style>
+<script language="javascript">  
+	mob_checkprc('https://m.pcstore.com.tw');	//導手機版    
+  brwsckidsn_fnc();
+
+  //打商品api
+  var prts=mrts=0;
+  var pdAjax = function(){
+    $.ajax({
+      method:"GET",
+      url:"https://www.pcstore.com.tw/adm/api/get_index_data.php",
+      dataType:"JSON",
+      error:function(error){
+        console.log(error);
+        if(prts < 1){
+          pdAjax();
+          prts++;
+        }
+      },
+      xhrFields: {
+        withCredentials: true
+      },	
+    }).then(function(data){
+      //商品模組
+      getData(data);
+    })
+  }
+  
+  //猜你喜歡api
+  var mySearchDefault = {};
+  var mpAjax = function(){
+    $.ajax({
+      method:"POST",
+      url:"https://www.pcstore.com.tw/adm/api/get_index_advp.php",
+      dataType:"JSON",
+      error:function(error){
+        console.log(error);
+        if(mrts < 1){
+          mpAjax();
+          mrts++;
+        }
+      },
+      xhrFields: {
+        withCredentials: true
+      },	
+      cache: false,
+    }).then(function(data){
+  	  if(data['state']=="OK"){
+        dw_viewp(data['data']['viewp']);
+        dw_likep(data['data']['likep'],18);
+  	    if($('#guesslike_pds img').length == 0 && typeof(vjs_putlikep) != 'undefined'){
+  	    	console.log("putlikep cache out");     	         	
+          $('#guesslike_pds').html(vjs_putlikep);
+          $('#glike').show();
+          guesslike_pds();
+        }
+        //$("img.lazy").lazyload({ effect : "fadeIn" }); 
+        mySearchDefault['searchp'] = data['data']['searchp'];
+      	mySearchDefault['hotkeyword'] = data['data']['hotkeywordsp']; 
+      }
+    })
+  }  
+  
+  //商品模組 依續載入
+  function getData(data){
+  	if(data['state']=="OK"){		  	
+  		$("#id_search_word").attr("placeholder",data['data']['searchbar']); //SearchBar關鍵字
+    	indexAd.startFun(data['data']['idxbar'],1);
+      topAd.startFun(data['data']['topad']);
+      cathotp.startFun(data['data']['cathotp']);
+      popcollection.startFun(data['data']['superprod']); 
+      $('#adtwo').show();      dw_promoarg(data['data']['promoarg']);
+      newarg.startFun(data['data']['newparg']);
+      dw_fpdarg(data['data']['fpdarg']);  
+      dw_pointarg(data['data']['pointarg']);  
+      lottecontent();//抽獎 現金積點  	      
+            	$('#bankarg').show();
+        index_bank_box();//銀行優惠    
+       
+      dw_widpic(data['data']['widpic']);  
+      //$("img.lazy").lazyload({ effect : "fadeIn" });    	    
+      
+  		//蓋版廣告
+  		if(typeof(data['data']['ptop']['simg'])!='undefined'){
+  			var showtime=6000;
+  			if(data['data']['ptop']['showtime'] > 0) showtime=data['data']['ptop']['showtime'];
+  			$('#topbar_over').css("background",data['data']['ptop']['bg']);
+  		  CreateEmbedAd(data['data']['ptop']['bimg'], data['data']['ptop']['simg'], data['data']['ptop']['url'], '#top_ad_inner', showtime);
+  	  }    	
+  	  //浮水印
+  		if(typeof(data['data']['pfloat']['bimg'])!='undefined'){
+  			var template ='<img src="'+data['data']['pfloat']['bimg']+'" title="'+data['data']['pfloat']['title']+'" alt="'+data['data']['pfloat']['title']+'">';
+  			$('.floatPOP').append(template);
+  			$('.floatPOP').attr('href',data['data']['pfloat']['url']);
+  			$('.floatPOP').attr('target',data['data']['pfloat']['target']);
+  			$('.floatPOP').show();
+  	  }  	
+    }  
+  }
+
+	$(document).ready(function() {	
+  	if(typeof(vjs_spd_data) != 'undefined'){console.log("superprod cache data");popcollection.startFun(vjs_spd_data);}	
+  	if(typeof(vjs_promoarg) != 'undefined'){$('.index__store_content').html(vjs_promoarg);}
+    if($('.index__store_content img').length >0 ){ $('#promoarg').show();index__store_box();console.log("promoarg cache out"); }    	
+  	if(typeof(vjs_newparg_data) != 'undefined'){console.log("newparg cache data");newarg.startFun(vjs_newparg_data);}    
+    //$("img.lazy").lazyload({ effect : "fadeIn" }); 
+       	    
+  	pdAjax(); //api資料
+    stickers();//右側輪播
+    stciky();//置頂bar
+    mpAjax(); //為你推薦
+  });    
+  $(window).scroll(stciky);
+  //alert('in debug');
+
+  //cookie
+  function intro_ck(){
+    localStorage.setItem('newcate', 1);
+  };
+  //大館動畫說明
+  function intro_anmi(){
+    if (localStorage.getItem('newcate') === null) {
+        $('body').append('<div class="bodyBG">');
+        $('.nav_list').hide();
+        $('.common_nav_wide').append('<div class="newsouter"><div class="newmaincate"></div></div>');
+        $('.newmaincate').addClass('optimg');
+      var menuSlide3 = setTimeout(function(){
+        $('.newmaincate').removeClass('optimg');
+        $('.newsouter').append('<div class="n_m_2" style="display:none;"><img src="https://img.pcstore.com.tw/web_img/st/idx/menushing.png"></div>');
+        $('.newsouter').append('<div class="n_m_4"><img src="https://img.pcstore.com.tw/web_img/st/idx/newmaincate3.png"></div>');
+        $('.newsouter').append('<div class="n_m_5"><img src="https://img.pcstore.com.tw/web_img/st/idx/newmaincate4.png"></div>');
+        $('.newsouter').append('<div class="n_m_6"><img src="https://img.pcstore.com.tw/web_img/st/idx/newmaincate5.png"></div>');
+        //漢堡亮
+        $('.common_nav_all').css({
+          'z-index':'101'
+        });
+        clearTimeout(menuSlide3);
+      },1500);
+      var menuSlide4 = setTimeout(function(){ 
+        $('.ctg_open_btn').addClass('menu-open');//漢堡變x
+        $('.newmaincate').remove();
+        $('.ham_menu_list').slideDown("slow");//漢堡展開
+        clearTimeout(menuSlide4);
+      },2300);
+      var menuSlide6 = setTimeout(function(){
+        $('.n_m_2').show().addClass('optimg');//圈
+        $('.n_m_4').addClass('optimg');//指左側
+        clearTimeout(menuSlide6);
+      },2800);
+      var menuSlide7 = setTimeout(function(){
+        $('.n_m_5').addClass('optimg');//大館圖
+        $('.n_m_6').addClass('optimg');//逛逛
+        clearTimeout(menuSlide7);
+      },3600);
+  
+      var menuSlide10 = setTimeout(function(){
+        var flag = true;
+        function once() {
+          $('html').on("click", function () {
+            if (flag) {
+              $('.nav_list').show();
+              $('.newsouter').remove();
+              $('.ctg_open_btn').removeClass('menu-open');
+              $('.bodyBG').remove();
+              $('.ham_menu_list').removeAttr('style');
+              $('.common_nav_all').removeAttr('style');
+              $('html').removeClass('menu-open');
+              flag = false;
+            } else {
+              return;
+            }
+          });
+        }
+        once();
+        clearTimeout(menuSlide10);
+      },4200); 
+      var menuSlide12 = setTimeout(function(){//顯示5秒後全部關閉
+        $('html').click();
+        clearTimeout(menuSlide12);
+      },8500);    
+    }
+    intro_ck();
+  } 
+  $(function(){
+    intro_anmi();
+  }); 
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NSKC5SH');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>	
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NSKC5SH"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar_ad" id="topbar_over">
+<div id="top_ad_inner"></div>
+</div>
+<!-- 蓋版廣告 end -->
+<!-- 最上方資訊列 START -->
+<script language="JavaScript" src="/js/real_fcache/lm3_pchtree.js?t=1626192000"></script>
+<form method="post" name="main_store" onSubmit="return false;" action="">
+<div id="header">
+<div class="topbar_ad" style="background:#cc9c66">
+<a href="https://img.pcstore.com.tw/store_ad/page/202106/0616jajago/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0616jajago" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/617/6868/16261768687887.jpg?d=071321074748" alt="加價購"></a></div>
+<div id="header" class="flexhead">
+<div class="inner" id="nav">
+<div class="stickyinside">
+  <div id="pc_logo_left">
+    <a href="https://www.pcstore.com.tw"><div class="pc-logo-img">PChome商店街：台灣 NO.1 網路開店平台</div></a>
+    <div class="stnum11">今日商品 465,210,021件 店家 122,874家</div>
+  </div>
+  <div id="pc_logo_s">
+    <a href="https://www.pcstore.com.tw"><div class="pc-logo-img-s">PChome商店街：台灣 NO.1 網路開店平台</div></a>
+  </div>
+  <div class="indexsearchbox">
+    <div class="searchbar">
+    	<div id="id_search_area"></div>
+      <div class="select">    	
+        <!--<select name="slt_k_option" id="slct">
+          <option value="1" >全部</option>
+          <option value="12" >跨店0元免運費</option>
+          <option value="14" >24h快速到貨</option>
+          <option value="8" >超商取貨付款</option>-->
+                                                                              <input type="hidden" name="slt_k_option" value="1" />
+        <select name="ftd_p" id="slct">
+          <option value="" > 全部 </option>
+          <option value="P000242_P000242"  >家電與視聽</option><option value="P000075_P000075"  >3C周邊</option><option value="P000027_P000027"  >電腦與平板</option><option value="P000095_P000095"  >手機通訊</option><option value="P000088_P000088"  >攝影機與相機</option><option value="P000054_P000054"  >汽機車百貨</option><option value="P211027_P211027"  >電玩遊戲</option><option value="P000831_P000831"  >動漫玩具公仔</option><option value="P000013_P000013"  >居家生活</option><option value="P000005_P000005"  >休閒旅遊</option><option value="P000754_P000754"  >食品與特產</option><option value="P000252_P000252"  >保健</option><option value="P211028_P211028"  >運動健身</option><option value="P210257_P210257"  >傢俱寢飾</option><option value="P210615_P210615"  >餐廚衛浴</option><option value="P000587_P000587"  >婦幼與親子</option><option value="P000588_P000588"  >寵物用品</option><option value="P000022_P000022"  >保養美妝</option><option value="P100002_P100002"  >女性流行服飾</option><option value="P000256_P000256"  >女性包包與鞋子</option><option value="P000750_P000750"  >手錶與眼鏡</option><option value="P000001_P000001"  >飾品與精品</option><option value="P100003_P100003"  >男性時尚</option><option value="P000761_P000761"  >書籍與雜誌</option><option value="P001077_P001077"  >文具與辦公用品</option><option value="P001418_P001418"  >音樂與影片</option><option value="P210396_P210396"  >手作與原創</option><option value="P001364_P001364"  >收藏品與藝術品</option><option value="P001025_P001025"  >情趣生活</option><option value="P212413_P212413"  >不動產服務</option>        </select>
+      </div>
+      <!--<input type="text" name="store_k_word" placeholder="" id="id_search_word" value="" onkeyup="autodirection(this, event)" onkeydown="updownselect(this, event);p_keydown(this.value, 'search', 'https://www.pcstore.com.tw/adm/search.htm','',event)" onfocus="bind_autoslt();" autocomplete="off">-->
+      <input type="text" name="store_k_word" value="" id="id_search_word" placeholder="" onkeydown="p_keydown(this.value, 'search', 'https://www.pcstore.com.tw/adm/search.htm','',event)" autocomplete="off">
+      <input type="hidden" name="pch_number" id="pch_number" value="" />
+      <a href="javascript:return;" onclick="s_k_search('https://www.pcstore.com.tw/adm/search.htm')"><img class="search-icon" src="https://img.pcstore.com.tw/web_img/st/idx/search-icon.png?t=1"></a>
+      <!-- 搜尋相關文字框 -->
+			<div class="search-popover"></div>
+    </div>
+  </div>
+  <!-- 搜尋框右邊廣告 -->
+    
+  <div class="index_top_ad">
+    <a href="https://boss.pcstore.com.tw/recruit2.htm?utm_source=pcstoreboss&utm_medium=hbnright&utm_campaign=save06" target="_self"><img src="https://img.pcstore.com.tw/pch_ad/pch_mar_ad/159/064/6436/15906464366689.gif?d=060120110316" alt="開店成交費0%"></a>
+  </div>
+    <!-- 上方右邊icon群 -->  
+  <div class="index_righttop">
+    <div id="cart_s" onclick='javascript:location.href="https://www.pcstore.com.tw/adm/buy_cart_list.htm"'><div class="top_carticon"></div>購物車<div class="bub" id="cartn"></div></div>
+    <div id="chat_s" class="indexcht"><div class="top_msicon" id="chticon"></div>私訊<span class="bub" style="display:none;"></span></div>
+    <div id="my_s"><div class="top_myicon" onclick="location.href='https://paystore.pcstore.com.tw/adm/myacc_ordlist.htm'"></div>我的
+      <div class="myicon_slide">
+        <div id="myloginok" class="my_slide_tit" style="display:none;"></div>
+        <div id="mylogin" class="my_slide_tit notlogged"><a href='https://paystore.pcstore.com.tw/adm/myacc_ordlist.htm'>登入</a>  |  <a href='https://paystore.pcstore.com.tw/adm/psell/persondata.htm'>註冊</a></div>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_ordlist.htm' class='row'>我的訂單</a>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_coupon.htm' class='row'>我的折價券</a>
+                <a href='https://paystore.pcstore.com.tw/adm/adevent/markup_info.htm?gano=IwyyolR..IPKGzmYx5VAjyvk.5KAcd5TE&beddingsale' class='row'>我的加價購&nbsp;<img src="https://img.pcstore.com.tw/store_ad/page/202106/0616jajago/9620.jpg?t=2107142104" height="20" style="margin-top:5px;"></a>
+                
+                <a href='https://paystore.pcstore.com.tw/adm/myacc_point.htm' class='row'>我的現金積點&nbsp;
+        	        
+        </a>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_lover.htm' class='row'>我的追蹤清單</a>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_suplover.htm' class='row'>我的最愛賣家</a>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_present.htm' class='row'>我的抽獎</a>
+        <a href='https://paystore.pcstore.com.tw/adm/myacc_modify.htm' class='row'>我的會員資料</a>
+        <div id="my_logout" style="display:none;"><a href='https://paystore.pcstore.com.tw/adm/logout.htm' class='row'>登出</a></div>
+      </div>    
+    </div>    	
+  </div>
+</div>
+</div>
+</div>
+</div>
+</form>
+  <!-- nav -->
+  <div class="common_nav_wide flexhead">
+    <div class="index_nav">
+        <div class="common_nav_all">
+            <button type="button" class="ctg_open_btn">
+              <span class="ctg_ico_menu"><em class="l1">&nbsp;</em></span>
+            </button>
+<!-- 漢堡內容 -->
+<div class="menu-overlay">
+  <div class="menu-plate">
+    <div class="ham_menu_list"></div>	
+  </div>        	
+</div>          	
+<!-- 漢堡內容end -->     
+<script>if(typeof(vjs_pchad_tree) != 'undefined'){ $('.ham_menu_list').html(vjs_pchad_tree);	console.log("pchad_tree cache out"); }</script>
+               
+            <div class="nav_list">
+            <a href="https://boss.pcstore.com.tw/?utm_source=pcstore&utm_medium=pchead&utm_campaign=save0" target="_self">馬上開店領補助</a><a href="https://www.pcstore.com.tw/index_ct.htm" target="_self">優良專櫃</a><a href="https://www.pcstore.com.tw/index_de.htm" target="_self">農會嚴選蔬果</a><a href="https://www.pcstore.com.tw/adm/adevent/roulette701/index.htm" target="_self">抽礦泉水</a><a href="https://www.pcstore.com.tw/index_dt.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0708pinwuopen" target="_self">【New Open★品物市集 滿$500現折$100】</a>            </div>
+                    </div>
+          <div class="nav_list_r"><a href="https://boss.pcstore.com.tw/intro_flow_fee.htm">我要開店</a> | <a href="https://seller.pcstore.com.tw">個人賣場</a> | <a href="https://mall.pcstore.com.tw">購物中心</a> | <a href="https://paystore.pcstore.com.tw/adm/appeal.htm">客服中心</a> | <a href="https://www.pcstore.com.tw/adm/faq/faq_2.htm" target="_bank">常見問題</a></div>
+    </div>
+  </div>
+</div>
+<iframe id="idifrmlogn" width="0" height="0" style="display:none;"></iframe>
+<script> 	
+  function rebind_info() {
+    var locsobj,jstm,rng=1;
+  	locsobj=locs_getmloins();
+  	if (!window.location.href.match(/\/\?ug$/i) && "object" == typeof(locsobj)) {
+  		jstm=Math.floor(new Date().getTime() / 1000);
+  		var dst=jstm-locsobj.tm;
+  		if (dst <= 5) { rng=0; }
+    }  	
+  	if (rng) {
+      $("#idifrmlogn").attr("src","https://www.pcstore.com.tw/adm/locstog.php");
+      $("#idifrmlogn").on("load",function(){ locs_display(); });
+    }
+    else {
+      locs_display();
+    }
+  }
+
+	function locs_getmloins() {
+    var ifys,locsobj,rfg=0;
+    if (typeof(Storage) !== "undefined") { 
+      try { ifys=localStorage.getItem("mloins"); rfg=1; }
+      catch (e) { return; } 	    
+    }
+    if (rfg) {    	
+      try { locsobj=JSON.parse(ifys); } catch (e) { return; }      
+      if (locsobj == null) { return; }
+      return locsobj; 
+    }    
+  }
+
+  function locs_display() {
+  	var locsobj;
+  	locsobj=locs_getmloins(); 	
+  	if ("object" != typeof(locsobj)) { return; }
+    if (1 == locsobj.fg) {
+      $("#myloginok").show(); $("#my_logout").show(); $("#mylogin").hide(); $("#myloginok").html(locsobj.nk+'，您好');  
+    }
+    else { 
+      $("#myloginok").hide(); $("#my_logout").hide(); $("#mylogin").show(); 
+    }
+  }
+ 
+  get_cartn.MsgDiv();     //購物車數字
+  rebind_info();   //登入
+</script><script> if(vjs_search_str != 'undefined'){ $("#id_search_word").attr("placeholder",vjs_search_str); } </script>
+<!-- 最上方資訊列 END -->
+<div class="adOut">
+	<div class="adInside">
+		<div class="index_keycate"> 
+      <ul class="menuList"> 
+      <li><a href="https://www.pcstore.com.tw/index_dt.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0708pinwuopen" target="_self"><font color=#eee86c>品物市集</font></a></li><li><a href="https://www.pcstore.com.tw/pchome24h/" target="_self"><font color=#eee86c>24h到貨</font></a></li><li><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701freeshopping/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0701freeshopping" target="_self"><font color=#eee86c>宅配免運</font></a></li><li><a href="https://img.pcstore.com.tw/store_ad/page/202106/0611store/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0611store" target="_self"><font color=#eee86c>防疫必備</font></a></li><li><a href="https://img.pcstore.com.tw/store_ad/page/202103/0304point/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0304point" target="_self">搶現金券</a></li><li><a href="https://www.pcstore.com.tw/getsport/" target="_self">宅家運動</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000754" target="_self">美食特產</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000252" target="_self">保健食品</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000054" target="_self">機車汽百</a></li><li><a href="https://www.pcstore.com.tw/stexh/P211027" target="_self">電玩遊戲</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000027" target="_self">電腦平板</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000075" target="_self">3C   周 邊</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000013" target="_self">居家收納</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000095" target="_self">手機通訊</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000587" target="_self">婦幼親子</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000242" target="_self">生活家電</a></li><li><a href="https://www.pcstore.com.tw/stexh/P211028" target="_self">運動健身</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000022" target="_self">保養彩妝</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000005" target="_self">休閒旅遊</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000761" target="_self">書籍雜誌</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000588" target="_self">寵物用品</a></li><li><a href="https://www.pcstore.com.tw/stexh/P000831" target="_self">玩具公仔</a></li>      </ul> 
+    </div>
+    <!-- 輪播大圖 -->  		
+	  <div class="adIn">
+	    <div class="adMv">
+	      <a><img></a>
+	      <a><img></a>
+	      <a><img></a>
+	    </div>
+	    <div class="preBtn"></div>
+	    <div class="nextBtn"></div>
+	    <div class="adDote"></div>
+	  </div>	  
+	  <!-- 右邊折價券 -->
+        <div class="index_rightstick1">
+      <div class="stickers">
+      	<div onclick="window.open('https://boss.pcstore.com.tw/recruit.htm?consultingtype=S&utm_source=pcstore&utm_medium=post-it1&utm_campaign=tp2104		','_self');"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/159/895/5649/15989556496039.jpg?d=062421011255" alt="開店代營運"></div>      </div>
+    </div>
+            <div class="index_rightstick2">
+      <div class="stickers">
+        <div onclick="window.open('https://boss.pcstore.com.tw/seminar.htm?utm_source=pcstore&utm_medium=post-it2&utm_campaign=seminar2104','_self');"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/159/895/5674/15989556745892.jpg?d=062421011306" alt="開店補助12萬"></div>      </div>
+    </div>
+      </div>  
+</div>
+<script>if(typeof(vjs_idxbar_data) != 'undefined'){ console.log("idxbar cache data"); indexAd.startFun(vjs_idxbar_data,1); }</script>
+
+<!-- 橫幅腰帶 970x90AD -->
+<div id="lm3_49_0" class="ad_970x90_area" style="display:none;"></div>
+
+<!-- 第二區塊 -->
+<div class="index_content2_outer clearfix">
+<div class="topUd">
+  <div class="topUdOut">
+    <div class="topUdSlide">
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+    </div>
+    <div class="topUdSlide">
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+      <a class="css-selector"><img></a>
+    </div>
+  </div>
+  <div class="topUdNext"></div>
+  <div class="topUdPre"></div>
+</div>
+
+<script>if(typeof(vjs_topad_data) != 'undefined'){ console.log("topad cache data"); topAd.startFun(vjs_topad_data); }</script>
+  
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_1" class="ad_970x90_area" style="display:none;"></div>
+
+  <!-- 熱銷注目商品 -->
+  <div class="index_content2 clearfix" id="cathotp">  
+    <div class="index_catpromo_section">
+      <div class="catpromo_logo">熱銷注目商品</div>
+      <a href="#" class="prevaw">前一個</a>
+      <a href="#" class="nextaw">後一個</a>  
+      <div class="catpromo_title"></div>  
+      <div class="cattab_container">
+        <div class="pdlayout clearfix anmation">
+        	            <div class="pd" id="pd0">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd1">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd2">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd3">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd4">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd5">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd6">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd7">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd8">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd9">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd10">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd11">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd12">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd13">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd14">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd15">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd16">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                      <div class="pd" id="pd17">
+            <a href="#">
+            <div class="imgbox"><img src="" border="0"></div>
+            <div class="ctbox"><span class="cticon"></span></div>
+            <div class="name"></div>
+            <span class="price"></span>
+            <div class="index_pd_icon"></div>
+            </a>
+            </div>  
+                  </div>
+      </div>
+    </div>
+  </div>
+  <script>if(typeof(vjs_cathotp_data) != 'undefined'){console.log("cathotp cache data");cathotp.startFun(vjs_cathotp_data);}</script>
+	
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_2" class="ad_970x90_area" style="display:none;"></div>
+
+  <!-- 熱門精選會場-->
+  <div class="index_content2 clearfix" id="superprod">
+    <div class="index_event_wrap">
+    <div class="ptEventTab">
+    <img>
+    <div class="ptEventTab-nav-wrap">
+      <ul class="tabs-nav ptevtop"></ul>
+      <div style="clear:both;"></div>
+    </div>
+    <div class="ptEventTab--content">
+    <div id="tab-one" class="tab-content">
+    <ul class="ptE_tag"></ul>
+    </div>	
+    <div style="clear:both;"></div>
+    </div>
+    </div>
+    <!-- 熱門商品 start -->
+    <div class="ptEventTabbox" data-cs-tab-index="0" class="active">
+    <div class="index_topthree"></div>
+    <div class="pdlayout ptEventTab_pds clearfix"></div>
+    </div>
+    <!-- 熱門商品 end -->    
+    </div>
+  </div>
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_3" class="ad_970x90_area" style="display:none;"></div>
+  
+  <!-- 300x250 ad -->
+    <div class="index_content2 clearfix" id="adtwo" style="display:none;">
+  <ul class="adzone_320x250">
+  	<li><a href="https://img.pcstore.com.tw/store_ad/page/202106/0611store/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=0611store" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/130/0495/16213004959039.jpg?d=052521012728" alt="農產嘉年華"></a></li><li><a href="https://boss.pcstore.com.tw/ad.htm?ad=tsbpc30007" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/504/1992/16250419921674.jpg?d=063021043312" alt="紓困4.0專案"></a></li><li><a href="https://img.pcstore.com.tw/store_ad/C2C_event/2021/03/mall.pisp3/index.htm?utm_source=store_ad&utm_medium=page&utm_campaign=mall.pisp3" target="_self"><img src="https://img.pcstore.com.tw/pch_ad/pch_mar_ad/161/430/5149/16143051493985.jpg?d=022621100549" alt="Pi 拍錢包賺回饋"></a></li><li><script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/21787810958,21900178528/pcstore_pc_index_10676', [300, 250], 'div-gpt-ad-1624429577409-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.pubads().collapseEmptyDivs();
+    googletag.enableServices();
+  });
+</script>
+<!-- /21787810958,21900178528/pcstore_pc_index_10676 -->
+<div id='div-gpt-ad-1624429577409-0' style='min-width: 300px; min-height: 250px;'>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1624429577409-0'); });
+  </script>
+</div></li>  </ul>
+  </div>
+    
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_4" class="ad_970x90_area" style="display:none;"></div>
+  
+  <div class="index_content2 clearfix" id="promoarg" style="display:none;">
+  <!-- 店家促銷區塊 -->
+  <div class="index__store_box">
+  <ul class="index__store_content"></ul>
+  </div>
+  </div>
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_5" class="ad_970x90_area" style="display:none;"></div>
+
+  <!-- 折價券 -->
+  <div class="index_content2 clearfix" id="listcop" style="display:none;">
+  <div class="coupontitle"><h3>COUPON</h3>  
+  <div class="switch-cp"></div>
+  </div>
+  <div id="c"></div>
+  </div>
+  <script>
+    if(typeof(vjs_coupon_tit) != 'undefined' && typeof(vjs_coupon_content) != 'undefined'){ //折價券
+    	$('.switch-cp').html(vjs_coupon_tit);
+    	$('#c').html(vjs_coupon_content);
+    } 
+    if($('#c li').length > 0){ $('#listcop').show(); couponset(); console.log('coupon cache out'); }
+  </script>  
+  <!-- 折價券end -->
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_6" class="ad_970x90_area" style="display:none;"></div>
+  
+  <!-- 每日新發現 start -->
+  <div class="index_content2 clearfix" id="newparg">
+  <div class="index_new_box clearfix">
+    <h3>每日新發現</h3>
+    <div class="switch-new-pd"></div>
+    <div class="new_box_pds">
+      <div class="pdlayout clearfix anmationB">
+      	        <div class="pd" id="pds0" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds1" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds2" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds3" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds4" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds5" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds6" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds7" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds8" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds9" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds10" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds11" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds12" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds13" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds14" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds15" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds16" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+                <div class="pd" id="pds17" style="display:none;">
+        <a href="#">
+        <div class="imgbox"><img src="" border="0"></div>
+        <div class="ctbox"><span class="cticon"></span></div>
+        <div class="name"></div>
+        <span class="price"></span>
+        <div class="index_pd_icon"></div>
+        </a>
+        </div>    	  
+              </div>    	  
+    </div>    
+  </div>
+  </div>
+  <!-- 每日新發現 end -->
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_7" class="ad_970x90_area" style="display:none;"></div>
+
+  <div class="index_content2 clearfix">
+  <!-- 抽獎 -->
+  <div class="index_lottebox" style="display:none;">
+    <div class="index_lottitle"><div class="index_loteicon"></div></div>
+    <ul class="index_lottecontent" id="lott"></ul>
+  </div>
+    
+  <!-- 現金積點 -->
+  <div class="index_pointbox" style="display:none;">
+    <div class="index_pottitle"><div class="index_poticon"></div></div>
+    <ul class="index_lottecontent" id="pointt"></ul>
+  </div>
+  </div>
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_8" class="ad_970x90_area" style="display:none;"></div>
+  
+  <!-- 為你推薦 -->
+  <div class="index_content2 clearfix" id="glike" style="display:none;">
+  <div class="index_seenguess_box">
+  <h3>為你推薦</h3>
+  <div class="pdlayout guesslike_pds clearfix" id="guesslike_pds"></div>
+  </div>
+  </div>
+  
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_9" class="ad_970x90_area" style="display:none;"></div>
+
+  <!-- 你曾經看過 -->
+  <div class="index_content2 clearfix" id="viewpd" style="display:none;">
+  <div class="index_seenguess_box">
+  <h3>你曾看過</h3>
+  <a class="edit_allseen" href="/adm/index_haveseen.htm" target="_bank">查看/編輯</a>
+  <div class="pdlayout haveseen_pds clearfix" id="haveseen_pds"></div>
+  </div>
+  </div>
+
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_10" class="ad_970x90_area" style="display:none;"></div>
+
+  <!-- 銀行優惠 -->
+    <div class="index_content2 clearfix" id="bankarg" style="display:none;">  
+  <div class="index_bankarea clearfix">
+    <h3>銀行優惠</h3>
+    <div class="index_bank_box">   
+    	      <div><a href="https://boss.pcstore.com.tw/ad.htm?ad=tsbpc30007" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/504/1563/16250415634121.jpg?d=063021042603" alt="台新銀行"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0719/16248607192656.jpg?d=062821021159" alt="中信"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0747/16248607470726.jpg?d=062821021227" alt="永豐"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0794/16248607947626.jpg?d=062821021314" alt="星展"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0821/16248608210000.jpg?d=062821021341" alt="華南"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0849/16248608492417.jpg?d=062821021409" alt="遠東"></a></div>
+            <div><a href="https://img.pcstore.com.tw/store_ad/page/202107/0701bank/index.htm" target="_self"><img src="https://img.pcstore.com.tw/pch_img/pch_mar_img/162/486/0770/16248607703277.jpg?d=062821021250" alt="花旗"></a></div>
+          </div>
+  </div>  
+  </div>
+  
+  <!-- 橫幅腰帶 970x90AD -->
+  <div id="lm3_49_11" class="ad_970x90_area" style="display:none;"></div>
+  
+</div>
+<!-- index_content2_outer end -->
+<!-- 浮水印 -->
+<a class="floatPOP" href="" target="" style="display:none;"></a>
+<!-- 左邊浮動 -->
+<div id="lm3_49_14"></div>
+<!-- footer -->
+<div class="index_foot_content">
+<div class="rt-footer-section">
+          <ul class="rt-footer-nav">
+            <li class="rt-footer-nav-item">
+              <a href="https://www.pcstore.com.tw/adm/information.htm" title="服務說明">
+                <span class="rt-footer-nav-name">服務說明</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="https://www.pcstore.com.tw/adm/flow.htm" title="購物安全">
+                <span class="rt-footer-nav-name">購物安全</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="https://www.pcstore.com.tw/adm/privacy.htm" title="隱私權聲明">
+                <span class="rt-footer-nav-name">隱私權聲明</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="https://www.pcstore.com.tw/adm/ad.htm" title="廣告刊登">
+                <span class="rt-footer-nav-name">廣告刊登</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item" target="_blank">
+              <a href="https://www.104.com.tw/jobbank/cust_job/introduce.cfm?j=623a42293c6c3e6844583a1d1d1d1d5f2443a363189j50&jobsource=checkc" target="_BLANK" title="徵才">
+                <span class="rt-footer-nav-name">徵才</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="http://store.ezpay.pchome.com.tw/" target="_BLANK" title="購物金">
+                <span class="rt-footer-nav-name">購物金</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item" target="_blank">
+              <a href="https://www.facebook.com/seller.pcstore/" title="Facebook" target="_blank">
+                <span class="rt-footer-nav-name">Facebook</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="https://www.instagram.com/pcstore_meow/" title="Instagram" target="_blank">
+                <span class="rt-footer-nav-name">Instagram</span>
+              </a>
+            </li>
+            <li class="rt-footer-nav-item">
+              <a href="javascript:mob_frtoprc('https://m.pcstore.com.tw')" title="手機版">
+                <span class="rt-footer-nav-name">手機版</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+<div class="addinfo">
+商店街市集國際資訊股份有限公司版權所有，轉載必究。<br>
+106 台北市大安區敦化南路二段105號14樓<br>
+防疫期間提供<a href="https://seller.pcstore.com.tw/S300000000">線上客服</a>服務，客服電話暫停服務
+</div>
+<div class="aboutus"><img src="https://img.pcstore.com.tw/web_img/st/idx/index_aboutus.png"></div>
+<div class="appdownload"><img src="https://img.pcstore.com.tw/web_img/st/idx/appdownload.png?t=0" usemap="#Map">
+  <map name="Map">
+    <area shape="rect" coords="1,5,116,39" href="https://apps.apple.com/tw/app/pchome%E5%95%86%E5%BA%97%E8%A1%97/id993983004">
+    <area shape="rect" coords="2,49,115,88" href="https://play.google.com/store/apps/details?id=com.tw.pcstore&hl=zh_TW">
+  </map>
+</div>
+</div>
+<script type="text/javascript" src="https://sii.pcstore.com.tw/ui/js/comet_tool.js?p=20210611001"></script>
+<script type="text/javascript" src="https://ii.pcstore.com.tw/ui/js/comet_tool.js?p=20210611001"></script>
+</body>
+</html>
+<!-- 	 2021/07/14 21:04:08 -->
+
+<script language="JavaScript">
+  var html_end_js_var=true;
+
+if(window.cal_impression && !window.cal_black ) cal_impression("https://www.pcstore.com.tw/edm/calculate_manage.php");
+
+</script>

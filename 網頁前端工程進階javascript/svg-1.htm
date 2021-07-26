@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>使用 JS 建立向量圖</title>
+<script>
+var svg;
+window.onload=function(){
+    svg=document.getElementById("svg");
+    // <line></line>
+    var line=document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", 50); // <line x1="50"></line>
+    line.setAttribute("y1", 50);
+    line.setAttribute("x2", 350);
+    line.setAttribute("y2", 350);
+    line.setAttribute("stroke", "red");
+    line.setAttribute("stroke-width", "2");
+    svg.appendChild(line); 
+    // <circle></circle>
+    var circle=document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", 200);
+    circle.setAttribute("cy", 50);
+    circle.setAttribute("r", 50);
+    circle.setAttribute("fill", "#ffcc00");
+    svg.appendChild(circle);
+    // <rect></rect>
+    var rect=createSvfElement("rect",{ // 直接使用函式 程式碼更簡潔
+        "x":150, "y":100,
+        "width":100, "height":100,
+        "fill":"blue"
+    });
+    svg.appendChild(rect);
+};
+// 創造包裝函式 再帶入想畫的圖形
+function createSvfElement(tagName, attrs){  
+    var element=document.createElementNS("http://www.w3.org/2000/svg", tagName);
+    for(var name in attrs){
+        element.setAttribute(name, attrs[name]);        
+    }
+    return element;
+}
+</script>
+</head>
+<body>
+<svg id="svg" width="640" height="480" style="border: 1px solid #000000;">
+<!--<>SVG 基礎教學<>
+    <line x1="50" y1="50" x2="350" y2="350" stroke="red" stroke-width="2"></line>
+    <circle cx="200" cy="50" r="50" fill="#ffcc00" stroke="red" stroke-width="3"></circle>
+    <rect x="150" y="100" width="100" height="100" fill="blue"></rect>
+    <polygon points="150,200,250,200,200,300" fill="black" stroke="red" stroke-width="2"></polygon>
+    <text x="100" y="350" fill="green" font-weight="bold" font-size="45">Hello SVG</text>
+-->
+</svg>
+</body>
+</html>
